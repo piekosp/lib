@@ -1,0 +1,9 @@
+{% extends 'books/index.html' %}
+{% block content %}
+<div class="container">
+    <div class="form">
+        <a href="{% url 'book_list' %}"><button class="submit_button">WebSite</button></a>
+        <a href="{% url 'BookList' %}"><button class="submit_button">API View</button></a>
+    </div>
+</div>
+{% endblock %}

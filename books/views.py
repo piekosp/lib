@@ -12,6 +12,10 @@ from books.filters import BookFilter, ApiBookFilter
 from books.serializers import BookSerializer
 
 
+def home_view(request):
+    return render(request, 'books/home_view.html')
+
+
 def book_list(request):
     filter = BookFilter(request.GET, queryset=Book.objects.all().prefetch_related('author'))
     books = filter.qs
