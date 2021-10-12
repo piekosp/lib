@@ -1,0 +1,90 @@
+{% extends 'books/index.html' %}
+{% block content %}
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <a href="{% url 'book_add' %}"><button type="button" class="btn btn-success">Add Book</button></a>
+            <a href="{% url 'author_add' %}"><button type="button" class="btn btn-warning">Add Author</button></a>
+            <a href="{% url 'book_import' %}"><button type="button" class="btn btn-primary">Import From Google</button></a>
+        </div>
+        <form class="d-flex" method="GET">
+        {% csrf_token %}
+        {{ filter.form.author }}
+        {{ filter.form.title }}
+        {{ filter.form.language }}
+        {{ filter.form.publication_date__gt }}
+        {{ filter.form.publication_date__lt }}
+        <button class="btn btn-outline-secondary">Search</button>
+        </form>
+    </div>
+</nav>
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Publication date</th>
+        <th scope="col">ISBN</th>
+        <th scope="col">Pages</th>
+        <th scope="col">Language</th>
+        <th scope="col">Cover</th>
+        <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in filter.qs %}
+        <tr>
+        <td>{{ book.title }}</td>
+        <td>
+            {% for author in book.author.all %}
+            {{ author.name }}
+            {% empty %}
+            -
+            {% endfor %}
+        </td>
+        <td>
+            {% if book.publication_date %}
+            {{ book.publication_date }}
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>
+            {% if book.isbn %}
+            {{ book.isbn }}
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>
+            {% if book.pages %}
+            {{ book.pages }}
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>
+            {% if book.language %}
+            {{ book.language }}
+            {% else %}
+            -
+            {% endif %}          
+        </td>
+        <td>
+            {% if book.image_url %}
+            <a href="{{ book.image_url }}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+            {% else %}
+            -
+            {% endif %}   
+        </td>
+        <td>
+            <a href="{% url 'book_edit' pk=book.id %}"><button type="button" class="btn btn-warning">Edit</button></a>
+            <a href="{% url 'book_delete' pk=book.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

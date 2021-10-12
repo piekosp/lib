@@ -1,0 +1,24 @@
+{% extends 'books/index.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="form">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.title }}
+            {{ form.publication_date }}
+            {{ form.isbn }}
+            {{ form.pages }}
+            {{ form.image_url }}
+            {{ form.language }}
+            {{ formset }}
+            <button class="submit_button">Create</button>
+        </form>
+        {% if form.errors %}
+            {{ form.errors.pages|escape }}
+            {{ form.errors.publication_date|escape }}
+            {{ form.errors.publication_date|escape }}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

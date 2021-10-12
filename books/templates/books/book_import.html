@@ -1,0 +1,16 @@
+{% extends 'books/index.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="form">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.key_word }}
+            {{ form.title }}
+            {{ form.author }}
+            {{ form.isbn }}
+            <button class="submit_button">Import</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
